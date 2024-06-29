@@ -1,7 +1,7 @@
 remote_state {
   backend = "s3"
   config = {
-    bucket = "my-terraform-state-bucket"
+    bucket = "my-terraform-state-bucket-ap-southeast-1"
     key    = "${path_relative_to_include()}/terraform.tfstate"
     region = "ap-southeast-1"
   }
@@ -15,4 +15,8 @@ provider "aws" {
   region = "ap-southeast-1"
 }
 EOF
+}
+
+inputs = {
+  project = "my-project"
 }
