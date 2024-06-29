@@ -1,3 +1,7 @@
+terraform {
+  backend "s3" {}
+}
+
 resource "aws_security_group" "web" {
   name        = "${var.environment}-web-sg"
   description = "Allow inbound traffic for web server"

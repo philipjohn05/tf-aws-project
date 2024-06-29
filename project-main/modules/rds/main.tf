@@ -1,3 +1,7 @@
+terraform {
+  backend "s3" {}
+}
+
 resource "aws_security_group" "db" {
   name        = "${var.environment}-db-sg"
   description = "Allow inbound traffic for database"
