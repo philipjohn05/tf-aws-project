@@ -17,6 +17,26 @@ provider "aws" {
 EOF
 }
 
-inputs = {
-  project = "my-project"
+# Consolidated locals block
+locals {
+  environment_vars = {
+    dev = {
+      vpc_cidr    = "10.0.0.0/16"
+      subnet_cidr = "10.0.1.0/24"
+    }
+    prod = {
+      vpc_cidr    = "172.16.0.0/16"
+      subnet_cidr = "172.16.1.0/24"
+    }
+  }
+  environment = reverse(split("/", path_relative_to_include()))[1]
 }
+
+# Expose the environment-specific variables
+inputs = merge(
+  {
+    project     = "my-project"
+    environment = local.environment
+  },
+  local.environment_vars[local.environment]
+)
